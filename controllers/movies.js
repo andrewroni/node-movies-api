@@ -27,7 +27,7 @@ exports.getMovie = async (req, res, next) => {
     res.status(400);
     return next({ message: 'Id not valid'});
   }
-  const movie = await Movie.findById(id, 'id name year price genre');
+  const movie = await Movie.findById(id, 'id name year price genre image');
   if (!movie) {
     res.status(404);
     return next({
