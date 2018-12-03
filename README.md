@@ -62,7 +62,7 @@ image: постер фильма.  после загрузки оригинал�
 ###### res:
 ```
 {
-    "message": "User succesfuly created. Now you can login."
+    "message": "User successfully created. Now you can login."
 }
 ```
 ## POST /users/auth
@@ -145,7 +145,7 @@ image: постер фильма.  после загрузки оригинал�
 ###### res:
 ```
 {
-    "message": "Genre Fantasy was succesfuly add",
+    "message": "Genre Fantasy was successfully add",
     "genre": {
         "_id": "5c056a634b9bbb21ec71835d",
         "name": "Fantasy",
@@ -162,7 +162,7 @@ image: постер фильма.  после загрузки оригинал�
 ###### res:
 ```
 {
-    "message": "Genre with id: 5c056a634b9bbb21ec71835d was succesfuly deleted"
+    "message": "Genre with id: 5c056a634b9bbb21ec71835d was successfully deleted"
 }
 ```
 
@@ -212,11 +212,11 @@ image: постер фильма.  после загрузки оригинал�
 **Important! Request should be _form-data_**
 ```
 {
-	"name": "Star Wars: Episode VIII - The Last Jedi",
+  "name": "Star Wars: Episode VIII - The Last Jedi",
   "year": "2017",
   "price": "12.99",
   "genre": "Fantasy",
-  "image": **image should be atteched as a form-data**
+  "image": **image should be attached as a form-data**
 }
 ```
 
@@ -224,7 +224,7 @@ image: постер фильма.  после загрузки оригинал�
 ###### res:
 ```
 {
-    "message": "Movie: Star Wars: Episode VIII - The Last Jedi  was succesfuly add",
+    "message": "Movie: Star Wars: Episode VIII - The Last Jedi  was successfully add",
     "movie": {
         "_id": "5c056fec4b9bbb21ec71835e",
         "name": "Star Wars: Episode VIII - The Last Jedi ",
@@ -244,11 +244,11 @@ image: постер фильма.  после загрузки оригинал�
 ###### req:
 *Token should be provided at Authorization header as Bearer Token, this Token was given to you @ POST /users/auth :* eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YzA1NjFjYTRiOWJiYjIxZWM3MTgzNWEiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTQzODU3MTY1LCJleHAiOjE1NDM4NjA3NjV9.xwGpP4n5JYe6SlKZlUHyztkT_lyJ9l9IdXWimVa5Uho
 
-:id *You can get **id** @ GET /genres/ , or when you was creating genre @ POST /genres/*
+:id *You can get **id** @ GET /movies/ , or when you was creating genre @ POST /movies/*
 
 ###### res:
 ```
 {
-    "message": "Movie with id: 5c056fec4b9bbb21ec71835e was succesfuly deleted"
+    "message": "Movie with id: 5c056fec4b9bbb21ec71835e was successfully deleted"
 }
 ```

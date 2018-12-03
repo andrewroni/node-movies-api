@@ -68,7 +68,7 @@ exports.createMovie = async (req, res, next) => {
           res.status(400);
           return next(err);
         } else {
-          res.json({ message: `Movie: ${name} was succesfuly add`, movie });
+          res.json({ message: `Movie: ${name} was successfully add`, movie });
         }
       });
     }
@@ -100,6 +100,6 @@ exports.removeMovie = async (req, res, next) => {
         console.log(`File ${movie.image.original} was not found`);
       }
     });
-    res.json({ message: `Movie with id: ${id} was succesfuly deleted` });
+    res.json({ message: `Movie with id: ${id} was successfully deleted` });
   }
 };

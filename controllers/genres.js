@@ -38,7 +38,7 @@ exports.createGenre = async (req, res, next) => {
         res.status(400);
         return next(err);
       } else {
-        res.json({ message: `Genre ${name} was succesfuly add`, genre });
+        res.json({ message: `Genre ${name} was successfully add`, genre });
       }
     });
   }
@@ -55,6 +55,6 @@ exports.removeGenre = async (req, res, next) => {
     res.status(404);
     return next({ message: `Genre with id: ${id} was not found`});
   } else {
-    res.json({ message: `Genre with id: ${id} was succesfuly deleted` });
+    res.json({ message: `Genre with id: ${id} was successfully deleted` });
   }
 };

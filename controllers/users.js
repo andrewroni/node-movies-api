@@ -25,7 +25,7 @@ exports.createUser = async (req, res, next) => {
       return next(err);
     } else {
       res.json({
-        message: 'User succesfuly created. Now you can login.'
+        message: 'User successfully created. Now you can login.'
       });
     }
   });
