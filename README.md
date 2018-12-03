@@ -1,3 +1,7 @@
+# node-movies-api
+
+# Task:
+
 Реализовать REST api для портала по прокату фильмов
 используя express, mongoDB , mongoose.
 
