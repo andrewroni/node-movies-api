@@ -1,0 +1,12 @@
+{
+  "dev": {
+    "PORT": 3000,
+    "MONGODB_URI": "mongodb://localhost:27017/MoviesApi",
+    "JWT_SECRET": "mnadfhoay103yi12yked109ncwad"
+  },
+  "test": {
+    "PORT": 3000,
+    "MONGODB_URI": "mongodb://localhost:27017/MoviesApiTest",
+    "JWT_SECRET": "asdfjh12873jk109fjd13641ioh3"
+  }
+}
