@@ -1,5 +1,7 @@
 {
+  "uploadPathOriginal": "public/img/original/",
+  "uploadPathThumb": "public/img/thumb/",
   "multerFileSize": 2097152,
-  "imageWidth": 100,
-  "imageHeight": 200
+  "thumbImageWidth": 100,
+  "thumbImageHeight": 200
 }

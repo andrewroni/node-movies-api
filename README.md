@@ -49,6 +49,15 @@ image: постер фильма.  после загрузки оригинал�
 то есть использовать аналог JOIN из SQL
 
 # Requests Example
+
+###### To start project:
+1. make sure to run mongodb instance at localhost:27017
+2. then run this commands:
+
+```
+npm install
+npm start
+```
 ## POST /users
 
 ###### req:

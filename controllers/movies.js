@@ -1,4 +1,4 @@
-const imgConfig = require('../config/multer.json');
+const multerConfig = require('../config/multer.json');
 
 const sharp  = require('sharp');
 const fs     = require('fs');
@@ -50,15 +50,25 @@ exports.createMovie = async (req, res, next) => {
     //@todo You can create new genre here, or send an error that provided genre does not exist, and you have to create it fisrt(for example..) etc.
     return next({ message: `Provided genre, \'${genre}\', does not exist. Please, create it first`});
   } else {
+    const thumbFile = multerConfig.uploadPathThumb + 'thumb-' + req.file.filename;
+    console.log();
     sharp(req.file.path)
-    .resize(imgConfig.imageWidth, imgConfig.imageHeight, { fit: 'inside' })
-    .toFile('public/img/thumb/' + 'thumb-' + req.file.filename, function (err, info) {
+    .resize(multerConfig.thumbImageWidth, multerConfig.thumbImageHeight, { fit: 'inside' })
+    .toFile(thumbFile, function (err, info) {
       if (err) {
-        req.status(400);
         return next(err);
       }
     });
-    const movie = await new Movie({ name, year, price, genre: result._id , image: { original: req.file.path, thumb: 'public/img/thumb/thumb-' + req.file.filename}});
+    const movie = await new Movie({
+      name,
+      year,
+      price,
+      genre: result._id,
+      image: {
+        original: req.file.path,
+        thumb: thumbFile
+      }
+    });
     if (!movie) {
       res.status(400);
       return next({ message: `Movie: ${name} was not add` });

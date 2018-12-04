@@ -1,6 +1,7 @@
 const router = require('express').Router();
 
 const {authenticate}  = require('../middleware/authenticate');
+const {upload}  = require('../middleware/multer');
 const movieController = require('../controllers/movies');
 
 // endpoint /movies :
@@ -11,7 +12,7 @@ const movieController = require('../controllers/movies');
 
 router.get('/', movieController.getMovies);
 router.get('/:id', movieController.getMovie);
-router.post('/', movieController.createMovie);
+router.post('/', upload, movieController.createMovie);
 router.delete('/:id', authenticate, movieController.removeMovie);
 
 module.exports = router;
