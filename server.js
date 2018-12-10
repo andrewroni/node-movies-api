@@ -4,6 +4,7 @@ const port = process.env.PORT || 3000;
 
 const express    = require('express');
 const bodyParser = require('body-parser');
+const path       = require('path');
 const {mongoose} = require('./db/mongoose');
 
 // Routes
@@ -14,7 +15,7 @@ const movieRoutes = require('./routes/movies');
 const app = express();
 
 // Express init
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 

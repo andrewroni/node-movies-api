@@ -30,7 +30,9 @@ const MovieSchema = new Schema({
     type: Number
   },
   genre: {
-    type: String
+    type: Schema.Types.ObjectId,
+    ref: 'Genre',
+    required: true
   },
   image: {
     type: Schema.Types.Mixed,

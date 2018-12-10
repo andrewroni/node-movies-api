@@ -6,17 +6,15 @@ const fs     = require('fs');
 const {Genre}               = require('../models/genre');
 const {Movie}               = require('../models/movie');
 const {ObjectID}            = require('mongodb');
-const {idToGenreConverter}  = require('../helpers/helpers');
 
 exports.getMovies = async (req, res, next) => {
   //@todo: there should be pagination
-  const movies = await Movie.find({}, 'id name year price genre image');
+  const movies = await Movie.find({}, 'id name year price genre image').populate('genre', 'name -_id');
+
   if (movies.length === 0) {
     res.status(404);
     return next({ message: 'No movies was found'});
   } else {
-    const genres = await Genre.find({}, 'id name');
-    idToGenreConverter(movies, genres);
     res.json(movies);
   }
 };
@@ -27,15 +25,13 @@ exports.getMovie = async (req, res, next) => {
     res.status(400);
     return next({ message: 'Id not valid'});
   }
-  const movie = await Movie.findById(id, 'id name year price genre image');
+  const movie = await Movie.findById(id, 'id name year price genre image').populate('genre', 'name -_id');
   if (!movie) {
     res.status(404);
     return next({
       message: `Movie with id: ${id} was not found`
     });
   } else {
-    const genres = await Genre.find({}, 'id name');
-    idToGenreConverter([movie], genres);
     res.json(movie);
   }
 };
@@ -51,7 +47,6 @@ exports.createMovie = async (req, res, next) => {
     return next({ message: `Provided genre, \'${genre}\', does not exist. Please, create it first`});
   } else {
     const thumbFile = multerConfig.uploadPathThumb + 'thumb-' + req.file.filename;
-    console.log();
     sharp(req.file.path)
     .resize(multerConfig.thumbImageWidth, multerConfig.thumbImageHeight, { fit: 'inside' })
     .toFile(thumbFile, function (err, info) {
@@ -63,7 +58,7 @@ exports.createMovie = async (req, res, next) => {
       name,
       year,
       price,
-      genre: result._id,
+      genre: result,
       image: {
         original: req.file.path,
         thumb: thumbFile

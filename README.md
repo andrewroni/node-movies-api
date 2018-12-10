@@ -2,51 +2,8 @@
 
 # Task:
 
-Реализовать REST api для портала по прокату фильмов
-используя express, mongoDB , mongoose.
+Task is [here](https://github.com/andrewroni/node-movies-api/blob/master/TASK.md).
 
-Структура проекта на свое усмотрение, но  чем «красивее» и читабельнее, тем лучше.
-
-endpoint /users:
-POST /users - возможность регистрации пользователя (пароль хешировать с помощью bcrypt)
-POST /users/auth - авторизация пользователя, по мейлу и паролю, в ответ мы должны получить JWT - токен.
-GET /users/ - вывести всех пользователей(скрывая поле password), только для пользователя, предоставившего валидный JWT token
-GET /users/:id - только с авторизацией аналогичной выше, вывести одного пользователя по id, скрывая поле password
-
-
-Объект user должен иметь:
-id
-name  - минимальная длина 5, максимальная 25 символов
-email - минимальная длина 8, максимальная 50 символов
-password
-
-При вводе неверных данных, пользователю в ответе от API в виде JSON должна выводиться информация об ошибке, к примеру «name must be at least 5 letters long»
-
-endpoint /genres :
-GET /genres (вывод всего списка жанров),
-GET /genres/:id - вывод жанра по id
-POST /genres - добавление нового жанра,
-DELETE /movies/:id - удаление жанра по id
-
-Объект genres должен иметь только id и name (название жанра)
-
-endpoint /movies :
-GET /movies (вывод всего списка фильмов)
-GET /movies/:id - вывод фильма по id
-POST - добавление нового фильма,
-DELETE /movies/:id - удаление фильма по id, тоже нужно быть авторизованным
-
-Объект movies должен иметь:
-
-id
-name   от 1 до 5 символов
-year	   только 4 цифры
-price - только цифры, любое количество
-genre: id жанра
-image: постер фильма.  после загрузки оригинала, он должен быть обрезан до размера 100x200, с сохранением оригинала на сервере. Максимальный размер загружаемого изображения - 2mb
-
-при выводе объекта movies через api, genre должно выводить соответствующий жанр полностью обьектом, а не только его id
-то есть использовать аналог JOIN из SQL
 
 # Requests Example
 
@@ -185,7 +142,9 @@ npm start
         "name": "Star Wars: Episode VIII - The Last Jedi ",
         "year": 2017,
         "price": 12.99,
-        "genre": "{ _id: 5c056a634b9bbb21ec71835d, name: 'Fantasy' }",
+        "genre": {
+          "name": "Fantasy"
+        },
         "image": {
             "original": "public/img/original/image-1543860204518.jpg",
             "thumb": "public/img/thumb/thumb-image-1543860204518.jpg"
@@ -206,7 +165,9 @@ npm start
     "name": "Star Wars: Episode VIII - The Last Jedi ",
     "year": 2017,
     "price": 12.99,
-    "genre": "{ _id: 5c056a634b9bbb21ec71835d, name: 'Fantasy' }",
+    "genre": {
+      "name": "Fantasy"
+    },
     "image": {
         "original": "public/img/original/image-1543860204518.jpg",
         "thumb": "public/img/thumb/thumb-image-1543860204518.jpg"
@@ -238,8 +199,12 @@ npm start
         "_id": "5c056fec4b9bbb21ec71835e",
         "name": "Star Wars: Episode VIII - The Last Jedi ",
         "year": 2017,
-        "price": 12.99,
-        "genre": "5c056a634b9bbb21ec71835d",
+        "price": 12.99
+        "genre": {
+            "_id": "5c056a634b9bbb21ec71835d",
+            "name": "Fantasy",
+            "__v": 0
+        },
         "image": {
             "original": "public/img/original/image-1543860204518.jpg",
             "thumb": "public/img/thumb/thumb-image-1543860204518.jpg"
