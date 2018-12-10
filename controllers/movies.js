@@ -9,7 +9,7 @@ const {ObjectID}            = require('mongodb');
 
 exports.getMovies = async (req, res, next) => {
   //@todo: there should be pagination
-  const movies = await Movie.find({}, 'id name year price genre image').populate('genre', 'name -_id');
+  const movies = await Movie.find().populate('genre', 'name -_id');
 
   if (movies.length === 0) {
     res.status(404);
@@ -25,7 +25,7 @@ exports.getMovie = async (req, res, next) => {
     res.status(400);
     return next({ message: 'Id not valid'});
   }
-  const movie = await Movie.findById(id, 'id name year price genre image').populate('genre', 'name -_id');
+  const movie = await Movie.findById(id).populate('genre', 'name -_id');
   if (!movie) {
     res.status(404);
     return next({

@@ -2,7 +2,7 @@ const {ObjectID}       = require('mongodb');
 const {Genre}          = require('../models/genre');
 
 exports.getGenres = async (req, res, next) => {
-  const genres = await Genre.find({}, 'id name');
+  const genres = await Genre.find();
   if (genres.length === 0) {
     res.status(404);
     return next({ message: 'No genres was found'});
@@ -17,7 +17,7 @@ exports.getGenre = async (req, res, next) => {
     res.status(400);
     return next({ message: 'Id not valid'});
   }
-  const genre = await Genre.findById(id, 'id name');
+  const genre = await Genre.findById(id);
   if (!genre) {
     res.status(404);
     return next({ message: `Genre with id: ${id} was not found`});

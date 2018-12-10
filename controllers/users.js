@@ -76,7 +76,7 @@ exports.authUser = async (req, res, next) => {
 };
 
 exports.getUsers = async (req, res, next) => {
-  const users = await User.find({}, 'id name email');
+  const users = await User.find({}, '-password -tokens');
   if (users.length === 0) {
     res.status(404);
     return next({
@@ -95,7 +95,7 @@ exports.getUser = async (req, res, next) => {
       message: 'Id not valid'
     });
   }
-  const user = await User.findById(id, 'id name email');
+  const user = await User.findById(id, '-password -tokens');
   if (!user) {
     res.status(404);
     return next({
