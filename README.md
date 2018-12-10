@@ -1,5 +1,3 @@
-# node-movies-api
-
 # Task: [here](https://github.com/andrewroni/node-movies-api/blob/master/TASK.md).
 
 # Requests Example
