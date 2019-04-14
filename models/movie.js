@@ -39,7 +39,6 @@ const MovieSchema = new Schema({
     required: true
   }
 });
-
 MovieSchema.plugin(uniqueValidator);
 const Movie = model('Movie', MovieSchema);
 

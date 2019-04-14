@@ -1,8 +1,8 @@
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+const jwt    = require('jsonwebtoken');
 
 const {ObjectID} = require('mongodb');
-const {User} = require('../models/user');
+const {User}     = require('../models/user');
 
 exports.createUser = async (req, res, next) => {
   const {
@@ -10,24 +10,21 @@ exports.createUser = async (req, res, next) => {
     email,
     password
   } = req.body;
-  const user = await new User({
+  const user = new User({
     name,
     email,
     password
   });
   if (!user) {
     res.status(400);
-    throw new Error('err');
+    return next(err);
   }
-  user.save((err, user) => {
+  await user.save((err, user) => {
     if (err) {
       res.status(400);
       return next(err);
-    } else {
-      res.json({
-        message: 'User successfully created. Now you can login.'
-      });
     }
+    res.json({ message: 'User successfully created. Now you can login.'});
   });
 };
 
@@ -44,35 +41,34 @@ exports.authUser = async (req, res, next) => {
     return next({
       message: `Email: ${email} was not found`
     });
-  } else {
-    bcrypt.compare(password, user.password, (err, response) => {
-      if (response) {
-        if (user.tokens) {
-          user.tokens = [];
-        }
-        const access = 'auth';
-        const token = jwt.sign({
+  }
+  bcrypt.compare(password, user.password, (err, response) => {
+    if (response) {
+      if (user.tokens) {
+        user.tokens = [];
+      }
+      const access = 'auth';
+      const token = jwt.sign({
           _id: user._id.toHexString(),
           access
         }, process.env.JWT_SECRET, {
           expiresIn: "1h"
         }).toString();
-        user.tokens.push({
-          access,
-          token
-        });
-        user.save();
-        res.json({
-          token
-        });
-      } else {
-        res.status(401);
-        return next({
-          message: 'Wrong password'
-        });
-      }
-    });
-  }
+      user.tokens.push({
+        access,
+        token
+      });
+      user.save();
+      res.json({
+        token
+      });
+    } else {
+      res.status(401);
+      return next({
+        message: 'Wrong password'
+      });
+    }
+  });
 };
 
 exports.getUsers = async (req, res, next) => {
@@ -82,13 +78,12 @@ exports.getUsers = async (req, res, next) => {
     return next({
       message: 'No users was found'
     });
-  } else {
-    res.json(users);
   }
+  res.json(users);
 };
 
 exports.getUser = async (req, res, next) => {
-  const {id} = req.params;
+  const { id } = req.params;
   if (!ObjectID.isValid(id)) {
     res.status(400);
     return next({
@@ -101,7 +96,6 @@ exports.getUser = async (req, res, next) => {
     return next({
       message: `User with id: ${id} was not found`
     });
-  } else {
-    res.json(user);
   }
+  res.json(user);
 };

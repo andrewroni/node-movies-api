@@ -15,7 +15,7 @@ const movieRoutes = require('./routes/movies');
 const app = express();
 
 // Express init
-app.use(express.static(path.join(__dirname, 'public')));
+app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 

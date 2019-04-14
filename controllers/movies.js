@@ -1,11 +1,11 @@
 const multerConfig = require('../config/multer.json');
 
-const sharp  = require('sharp');
-const fs     = require('fs');
+const sharp = require('sharp');
+const fs    = require('fs');
 
-const {Genre}               = require('../models/genre');
-const {Movie}               = require('../models/movie');
-const {ObjectID}            = require('mongodb');
+const {Genre}    = require('../models/genre');
+const {Movie}    = require('../models/movie');
+const {ObjectID} = require('mongodb');
 
 exports.getMovies = async (req, res, next) => {
   //@todo: there should be pagination
@@ -14,13 +14,12 @@ exports.getMovies = async (req, res, next) => {
   if (movies.length === 0) {
     res.status(404);
     return next({ message: 'No movies was found'});
-  } else {
-    res.json(movies);
   }
+  res.json(movies);
 };
 
 exports.getMovie = async (req, res, next) => {
-  const {id} = req.params;
+  const { id } = req.params;
   if(!ObjectID.isValid(id)) {
     res.status(400);
     return next({ message: 'Id not valid'});
@@ -31,9 +30,8 @@ exports.getMovie = async (req, res, next) => {
     return next({
       message: `Movie with id: ${id} was not found`
     });
-  } else {
-    res.json(movie);
   }
+  res.json(movie);
 };
 
 exports.createMovie = async (req, res, next) => {
@@ -54,7 +52,7 @@ exports.createMovie = async (req, res, next) => {
         return next(err);
       }
     });
-    const movie = await new Movie({
+    const movie = new Movie({
       name,
       year,
       price,
@@ -68,7 +66,7 @@ exports.createMovie = async (req, res, next) => {
       res.status(400);
       return next({ message: `Movie: ${name} was not add` });
     } else {
-      movie.save((err, movie) => {
+      await movie.save((err, movie) => {
         if (err) {
           res.status(400);
           return next(err);
@@ -81,7 +79,7 @@ exports.createMovie = async (req, res, next) => {
 };
 
 exports.removeMovie = async (req, res, next) => {
-  const {id} = req.params;
+  const { id } = req.params;
   if(!ObjectID.isValid(id)) {
     res.status(400);
     return next({ message: 'Id not valid'});
@@ -93,10 +91,14 @@ exports.removeMovie = async (req, res, next) => {
   } else {
     fs.exists(movie.image.original, function(originalExists) {
       if(originalExists) {
-        fs.unlink(movie.image.original, () => {});
+        fs.unlink(movie.image.original, (err) => {
+          return next(err);
+        });
         fs.exists(movie.image.thumb, function(thumbExists) {
           if(thumbExists) {
-            fs.unlink(movie.image.thumb, () => {});
+            fs.unlink(movie.image.thumb, (err) => {
+              return next(err);
+            });
           } else {
             console.log(`File ${movie.image.thumb} was not found`);
           }

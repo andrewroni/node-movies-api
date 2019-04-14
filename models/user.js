@@ -70,7 +70,7 @@ UserSchema.methods.generateAuthToken = function () {
   const user = this;
   const access = 'auth';
   const token = jwt.sign({_id: user._id.toHexString(), access}, process.env.JWT_SECRET, {
-      expiresIn: "1h"
+      expiresIn: "12h"
     }).toString();
   user.tokens.push({access, token});
   return user.save().then(() => {
@@ -91,9 +91,8 @@ UserSchema.pre('save', function (next) {
         }
       });
     });
-  } else {
-    next();
   }
+  next();
 });
 
 UserSchema.plugin(uniqueValidator);
